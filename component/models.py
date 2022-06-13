@@ -11,10 +11,7 @@ class BusinessComponent1(models.Model):
 
 
 class InflectionTimeComponent1(models.Model):
-    data_field = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.data_field
+    data_field = models.DecimalField(max_digits=5, decimal_places=2)
 
 
 # Create your models here.
@@ -23,8 +20,8 @@ class TextBox(models.Model):
     position_y = models.CharField(max_length=10)
     height = models.IntegerField()
     width = models.IntegerField()
-    start_time = models.FloatField()
-    end_time = models.FloatField()
+    start_time = models.DecimalField(max_digits=5, decimal_places=2)
+    end_time = models.DecimalField(max_digits=5, decimal_places=2)
     opacity = models.IntegerField()
 
     def __str__(self):
@@ -36,8 +33,8 @@ class LogoSlot(models.Model):
     position_y = models.CharField(max_length=10)
     height = models.IntegerField()
     width = models.IntegerField()
-    start_time = models.FloatField()
-    end_time = models.FloatField()
+    start_time = models.DecimalField(max_digits=5, decimal_places=2)
+    end_time = models.DecimalField(max_digits=5, decimal_places=2)
     opacity = models.IntegerField()
 
     def __str__(self):
@@ -48,7 +45,7 @@ class Component1(models.Model):
     component_url = models.FileField(upload_to='media', null=True)
     types = models.CharField(max_length=20)
     sub_type = models.CharField(max_length=30)
-    length = models.FloatField()
+    length = models.DecimalField(max_digits=5, decimal_places=2, default=None)
     business = models.ManyToManyField(BusinessComponent1)
     inflection_time = models.ManyToManyField(InflectionTimeComponent1)
     text_box = models.ForeignKey(TextBox, on_delete=models.CASCADE)

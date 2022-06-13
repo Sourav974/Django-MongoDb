@@ -6,8 +6,8 @@ from .models import *
 
 
 admin.site.register(SuperTemplate)
-# admin.site.register(BackgroundScore)
-admin.site.register(Components)
-# admin.site.register(Overlays)
-# admin.site.register(TextElement)
-# admin.site.register(Logos)
+admin.site.register(SuperBackgroundScore)
+admin.site.register(SuperComponents)
+admin.site.register(SuperOverlays)
+admin.site.register(SuperTextElement)
+admin.site.register(SuperLogos)

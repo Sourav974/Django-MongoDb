@@ -1,51 +1,55 @@
 from dataclasses import fields
 from rest_framework import serializers
-from template.serializers import *
+# from template.serializers import *
 from .models import *
 
 
-# class BackgroundScoreSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = BackgroundScore
-#         fields = '__all__'
-
-
-class ComponentsSerializer(serializers.ModelSerializer):
+class SuperBackgroundScoreSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Components
+        model = SuperBackgroundScore
         fields = '__all__'
 
 
-# class TextElementSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = TextElement
-#         fields = '__all__'
+class SuperComponentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SuperComponents
+        fields = '__all__'
 
 
-# class LogosSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Logos
-#         fields = '__all__'
+class SuperTextElementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SuperTextElement
+        fields = '__all__'
 
 
-# class OverlaysSerializer(serializers.ModelSerializer):
-#     text_element = TextElementSerializer(many=True)
-#     logos = LogosSerializer(many=True)
+class SuperLogosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SuperLogos
+        fields = '__all__'
 
-#     class Meta:
-#         model = Overlays
-#         fields = ['text_element', 'logos']
+
+class SuperOverlaysSerializer(serializers.ModelSerializer):
+    text_element = SuperTextElementSerializer(many=True)
+    logos = SuperLogosSerializer(many=True)
+
+    class Meta:
+        model = SuperOverlays
+        fields = ['text_element', 'logos']
 
 
 class SuperTemplateSerializer(serializers.ModelSerializer):
-    background_score = BackgroundScoreSerializer()
-    components = ComponentsSerializer(many=True)
-    overlays = OverlaysSerializer()
+    background_score = SuperBackgroundScoreSerializer()
+    components = SuperComponentsSerializer(many=True)
+    overlays = SuperOverlaysSerializer()
+    duration = serializers.SerializerMethodField()
 
     class Meta:
         model = SuperTemplate
         fields = ['business', 'types', 'duration',
                   'template_url', 'background_score', 'components', 'overlays']
+
+    def get_duration(self, obj):
+        return obj.duration.total_seconds()
 
 
 class CreateSuperTemplateSerializer(serializers.ModelSerializer):

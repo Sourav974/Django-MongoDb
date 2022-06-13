@@ -4,21 +4,50 @@ from .models import *
 
 
 class BackgroundScoreSerializer(serializers.ModelSerializer):
+    start_time = serializers.SerializerMethodField()
+    end_time = serializers.SerializerMethodField()
+
     class Meta:
         model = BackgroundScore
-        fields = '__all__'
+        fields = ['id', 'score_url', 'start_time', 'end_time']
+
+    def get_start_time(self, obj):
+        return obj.start_time.total_seconds()
+
+    def get_end_time(self, obj):
+        return obj.start_time.total_seconds()
 
 
 class TextElementSerializer(serializers.ModelSerializer):
+    start_time = serializers.SerializerMethodField()
+    end_time = serializers.SerializerMethodField()
+
     class Meta:
         model = TextElement
-        fields = '__all__'
+        fields = ['text', 'font', 'font_size', 'position_x',
+                  'position_y', 'start_time', 'end_time']
+
+    def get_start_time(self, obj):
+        return obj.start_time.total_seconds()
+
+    def get_end_time(self, obj):
+        return obj.start_time.total_seconds()
 
 
 class LogosSerializer(serializers.ModelSerializer):
+    start_time = serializers.SerializerMethodField()
+    end_time = serializers.SerializerMethodField()
+
     class Meta:
         model = Logos
-        fields = '__all__'
+        fields = ['logo_url', 'start_time', 'end_time',
+                  'transition_in', 'transition_out']
+
+    def get_start_time(self, obj):
+        return obj.start_time.total_seconds()
+
+    def get_end_time(self, obj):
+        return obj.start_time.total_seconds()
 
 
 class OverlaysSerializer(serializers.ModelSerializer):
@@ -27,7 +56,7 @@ class OverlaysSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Overlays
-        fields = ['text_element', 'logos']
+        fields = ['logos', 'text_element']
 
 
 class ComponentsSerializer(serializers.ModelSerializer):
@@ -40,12 +69,16 @@ class TemplateSerializer(serializers.ModelSerializer):
 
     background_score = BackgroundScoreSerializer()
     overlays = OverlaysSerializer()
-    components = ComponentsSerializer(many=True)
+    components = ComponentsSerializer()
+    duration = serializers.SerializerMethodField()
 
     class Meta:
         model = Template
         fields = ['id', 'business', 'types', 'watermark', 'duration',
                   'template_url', 'background_score', 'components', 'overlays']
+
+    def get_duration(self, obj):
+        return obj.duration.total_seconds()
 
 
 class CreateTemplateSerializer(serializers.ModelSerializer):

@@ -16,9 +16,10 @@ class LogoSerializer(serializers.ModelSerializer):
 
 class ComponentSerializer2(serializers.ModelSerializer):
     business = serializers.StringRelatedField(many=True)
-    inflection_time = serializers.StringRelatedField(many=True)
+    # inflection_time = serializers.DecimalField(max_digits=5, decimal_places=2)
     text_box = TextBoxSerializer()
     logo_slot = LogoSerializer()
+#
 
     class Meta:
         model = Component1

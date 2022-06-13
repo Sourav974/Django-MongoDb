@@ -42,11 +42,11 @@ class UpdateComponents(APIView):
             return serializer.errors
 
 
-# class DeleteComponents(APIView):
-#     def delete(self, request, pk):
-#         erase = Component.objects.get(pk=pk)
-#         erase.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
+class DeleteComponents(APIView):
+    def delete(self, request, pk):
+        erase = Component.objects.get(pk=pk)
+        erase.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class DeleteComponents(APIView):
@@ -55,3 +55,11 @@ class DeleteComponents(APIView):
         erase = Component.objects.get(id=component)
         erase.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class GetComponentById(APIView):
+    def get(self, request):
+        component = request.GET['component']
+        data = Component.objects.get(id=component)
+        serializer = ComponentSerializer(data)
+        return Response(serializer.data)

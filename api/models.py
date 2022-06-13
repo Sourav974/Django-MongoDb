@@ -9,18 +9,20 @@ class Business(models.Model):
 
 
 class InflectionTime(models.Model):
-    data_field = models.CharField(max_length=30)
+    data_field = models.DurationField()
 
-    def __str__(self):
-        return self.data_field
+    # def __str__(self):
+    #     return self.data_field
 
 
 class Component(models.Model):
+    raw_component_url = models.FileField(upload_to='media', null=True)
     component_url = models.FileField(upload_to='media', null=True)
+    business = models.ManyToManyField(Business)
     types = models.CharField(max_length=20)
     sub_type = models.CharField(max_length=30)
-    length = models.FloatField()
-    business = models.ManyToManyField(Business)
+    # length = models.DurationField()
+
     inflection_time = models.ManyToManyField(InflectionTime)
 
     def __str__(self):

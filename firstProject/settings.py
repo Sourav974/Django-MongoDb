@@ -25,12 +25,13 @@ SECRET_KEY = 'django-insecure-t9tjm(%u5)fz_rh9#)(ye!sf$72@)fc)-944@=$(cjk&ka^$ru
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'firstProject',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,10 +80,20 @@ WSGI_APPLICATION = 'firstProject.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'users',
+        'ENFORCE': False,
     }
+    # 'default': {
+    #     'ENGINE': 'djongo',
+    #     'NAME': 'firstProject',
+    #     'CLIENT': {'host': 'mongodb://sourav:password@<atlas cluster>/<firstProject>?retryWrites=true&w=majority'},
+
+    #     'PORT': 27017,
+    # }
 }
 
 
