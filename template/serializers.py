@@ -60,9 +60,14 @@ class OverlaysSerializer(serializers.ModelSerializer):
 
 
 class ComponentsSerializer(serializers.ModelSerializer):
+    component_start_time = serializers.SerializerMethodField()
+
     class Meta:
         model = Components
         fields = ['slot_id', 'component_url', 'component_start_time']
+
+    def get_component_start_time(self, obj):
+        return obj.component_start_time.total_seconds()
 
 
 class TemplateSerializer(serializers.ModelSerializer):
